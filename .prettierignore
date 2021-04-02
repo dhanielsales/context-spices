@@ -1,0 +1,14 @@
+# dependencies 
+/node_modules
+
+# production
+/build
+
+# TypeScript
+tsconfig.json
+
+# Jest and Tests
+jest.config.js
+
+# Babel Config
+babel.config.js
