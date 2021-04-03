@@ -3,35 +3,41 @@ import { Action, createActions, createReducer } from './index';
 /*********************************** ACTION ***********************************/
 
 enum TypesNames {
-  TEST = 'TEST',
+  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
 }
 
-interface TestAction extends Action<TypesNames.TEST> {
-  text: string;
+interface LoginSuccessAction extends Action<TypesNames.LOGIN_SUCCESS> {
+  email: string;
+  token: string;
 }
 
-const actions = createActions<{ test: (text: string) => TestAction }>(
-  { test: TypesNames.TEST },
-  { test: ['text'] },
-);
+const actions = createActions<{
+  loginSuccess: (email: string, token: string) => LoginSuccessAction;
+}>({ loginSuccess: TypesNames.LOGIN_SUCCESS }, { loginSuccess: ['email', 'token'] });
 
-const { test } = actions;
+const { loginSuccess } = actions;
 
 const INITIAL_STATE = {
-  myText: 'Hello World',
+  user: {
+    email: '',
+    token: '',
+  },
 };
 
 type State = typeof INITIAL_STATE;
 
-const testReducer = (state: State, payload: TestAction): State => {
+const loginSuccessReducer = (state: State, payload: LoginSuccessAction): State => {
   return {
     ...state,
-    myText: payload.text,
+    user: {
+      email: payload.email,
+      token: payload.token,
+    },
   };
 };
 
 const reducerTypes = {
-  [TypesNames.TEST]: testReducer,
+  [TypesNames.LOGIN_SUCCESS]: loginSuccessReducer,
 };
 
 const mainReducer = (state: State, action: Action) =>
@@ -39,5 +45,15 @@ const mainReducer = (state: State, action: Action) =>
 
 /*********************************** RUNNING ***********************************/
 
-console.log(test('This is a test action'));
-console.log(mainReducer(INITIAL_STATE, test('This is a test action')));
+console.log(
+  loginSuccess(
+    'email@domain.com',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIi...',
+  ),
+);
+console.log(
+  mainReducer(
+    INITIAL_STATE,
+    loginSuccess('email@domain.com', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj...'),
+  ),
+);
