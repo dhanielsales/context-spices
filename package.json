@@ -8,7 +8,7 @@
     "build": "tsc --declaration",
     "test": "nodemon --watch 'src/' --exec 'ts-node src/sample.ts' -e ts"
   },
-  "keywords": [],
+  "keywords": ["javascript", "context-spices", "context", "react-context", "typescript"],
   "author": "Dhaniel Sales - Github: https://github.com/dhanielsales",
   "license": "ISC",
   "devDependencies": {
