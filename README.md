@@ -25,6 +25,8 @@ or Yarn:
  yarn add context-spices
 ```
 
+Demo - https://ducks-with-context.vercel.app/
+
 # Sample
 
 Below are examples of each function individually.
@@ -35,7 +37,7 @@ Use the createActions function to build an object that contains as many actions 
 
 ```ts
 enum TypesNames {
-  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
+  LOGIN_SUCCESS = "LOGIN_SUCCESS",
 }
 
 interface LoginSuccessAction extends Action<TypesNames.LOGIN_SUCCESS> {
@@ -45,12 +47,18 @@ interface LoginSuccessAction extends Action<TypesNames.LOGIN_SUCCESS> {
 
 const actions = createActions<{
   loginSuccess: (email: string, token: string) => LoginSuccessAction;
-}>({ loginSuccess: TypesNames.LOGIN_SUCCESS }, { loginSuccess: ['email', 'token'] });
+}>(
+  { loginSuccess: TypesNames.LOGIN_SUCCESS },
+  { loginSuccess: ["email", "token"] }
+);
 
 const { loginSuccess } = actions;
 
 console.log(
-  loginSuccess('email@domain.com', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj...'),
+  loginSuccess(
+    "email@domain.com",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj..."
+  )
 );
 
 // Outputs:
@@ -70,14 +78,17 @@ Use the createReducer function to build a function to dispatch the actions and c
 ```ts
 const INITIAL_STATE = {
   user: {
-    email: '',
-    token: '',
+    email: "",
+    token: "",
   },
 };
 
 type State = typeof INITIAL_STATE;
 
-const loginSuccessReducer = (state: State, payload: LoginSuccessAction): State => {
+const loginSuccessReducer = (
+  state: State,
+  payload: LoginSuccessAction
+): State => {
   return {
     ...state,
     user: {
@@ -97,8 +108,11 @@ const mainReducer = (state: State, action: Action) =>
 console.log(
   mainReducer(
     INITIAL_STATE,
-    loginSuccess('email@domain.com', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj...'),
-  ),
+    loginSuccess(
+      "email@domain.com",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj..."
+    )
+  )
 );
 
 // Outputs:
@@ -121,9 +135,9 @@ First, create a folder in the project to save the files context, action and redu
 Second, within a context file, create a structure for context and useReducer as below:
 
 ```ts
-import React, { createContext, useContext, useReducer } from 'react';
-import { Action } from 'context-spices';
-import { CounterReducer } from './ducks';
+import React, { createContext, useContext, useReducer } from "react";
+import { Action } from "context-spices";
+import { CounterReducer } from "./ducks";
 
 export interface State {
   count: number;
@@ -144,7 +158,11 @@ const CounterContext = createContext<ContextProps>({
 
 export const ButtonsProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(CounterReducer, INITIAL_STATE);
-  return <CounterContext.Provider value={{ state, dispatch }}>{children}</CounterContext.Provider>;
+  return (
+    <CounterContext.Provider value={{ state, dispatch }}>
+      {children}
+    </CounterContext.Provider>
+  );
 };
 
 export const useCounters = () => useContext(CounterContext);
@@ -155,13 +173,13 @@ Third, create a file to save your actions and reducers that I will call the file
 Within this file, create a structure similar to this one, so that you can freely control its state:
 
 ```ts
-import { Action, createActions, createReducer } from 'context-spices';
-import { State } from './index'; // Context file
+import { Action, createActions, createReducer } from "context-spices";
+import { State } from "./index"; // Context file
 
 export enum TypesNames {
-  INCREMENT = 'INCREMENT',
-  DECREMENT = 'DECREMENT',
-  SET_VALUE = 'SET_VALUE',
+  INCREMENT = "INCREMENT",
+  DECREMENT = "DECREMENT",
+  SET_VALUE = "SET_VALUE",
 }
 
 export type Increment = Action<TypesNames.INCREMENT>;
@@ -185,8 +203,8 @@ export const Creators = createActions<{
   {
     increment: null,
     decrement: null,
-    setValue: ['value'],
-  },
+    setValue: ["value"],
+  }
 );
 
 const setValueReducer = (state: State, { value }: SetValue): State => {
