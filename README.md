@@ -1,6 +1,6 @@
 # context-spices
 
-<img src='./assets/context-spices.png' align='left' width='250px' height='250px' />
+<img src='https://raw.githubusercontent.com/dhanielsales/context-spices/master/assets/context-spices.png' align='left' width='250px' height='250px' />
 
 # What is it about?
 
