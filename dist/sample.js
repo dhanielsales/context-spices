@@ -16,22 +16,28 @@ var index_1 = require("./index");
 /*********************************** ACTION ***********************************/
 var TypesNames;
 (function (TypesNames) {
-    TypesNames["TEST"] = "TEST";
+    TypesNames["LOGIN_SUCCESS"] = "LOGIN_SUCCESS";
 })(TypesNames || (TypesNames = {}));
-var actions = index_1.createActions({ test: TypesNames.TEST }, { test: ['text'] });
-var test = actions.test;
+var actions = index_1.createActions({ loginSuccess: TypesNames.LOGIN_SUCCESS }, { loginSuccess: ['email', 'token'] });
+var loginSuccess = actions.loginSuccess;
 var INITIAL_STATE = {
-    myText: 'Hello World',
+    user: {
+        email: '',
+        token: '',
+    },
 };
-var testReducer = function (state, payload) {
-    return __assign(__assign({}, state), { myText: payload.text });
+var loginSuccessReducer = function (state, payload) {
+    return __assign(__assign({}, state), { user: {
+            email: payload.email,
+            token: payload.token,
+        } });
 };
 var reducerTypes = (_a = {},
-    _a[TypesNames.TEST] = testReducer,
+    _a[TypesNames.LOGIN_SUCCESS] = loginSuccessReducer,
     _a);
 var mainReducer = function (state, action) {
     return index_1.createReducer(state, action, reducerTypes);
 };
 /*********************************** RUNNING ***********************************/
-console.log(test('This is a test action'));
-console.log(mainReducer(INITIAL_STATE, test('This is a test action')));
+console.log(loginSuccess('email@domain.com', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIi...'));
+console.log(mainReducer(INITIAL_STATE, loginSuccess('email@domain.com', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj...')));
