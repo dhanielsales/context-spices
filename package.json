@@ -4,6 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dhanielsales/context-spices"
+  },
   "scripts": {
     "build": "tsc --declaration",
     "test": "nodemon --watch 'src/' --exec 'ts-node src/sample.ts' -e ts"
