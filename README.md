@@ -25,8 +25,9 @@ or Yarn:
  yarn add context-spices
 ```
 
-Demo - https://ducks-with-context.vercel.app/
-Demo Repo - https://github.com/dhanielsales/ducks-with-context
+#### Demo - https://ducks-with-context.vercel.app/
+
+#### Demo Repo - https://github.com/dhanielsales/ducks-with-context
 
 # Sample
 
