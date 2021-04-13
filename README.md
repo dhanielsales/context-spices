@@ -77,6 +77,8 @@ console.log(
 
 Use the createReducer function to build a function to dispatch the actions and change a State and returns the results.
 
+### Normal Javascript Object
+
 ```ts
 const INITIAL_STATE = {
   user: {
@@ -99,6 +101,58 @@ const loginSuccessReducer = (
     },
   };
 };
+
+const reducerTypes = {
+  [TypesNames.LOGIN_SUCCESS]: loginSuccessReducer,
+};
+
+const mainReducer = (state: State, action: Action) =>
+  createReducer<State>(state, action, reducerTypes);
+
+console.log(
+  mainReducer(
+    INITIAL_STATE,
+    loginSuccess(
+      "email@domain.com",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMj..."
+    )
+  )
+);
+
+// Outputs:
+// {
+//   user: {
+//     email: 'email@domain.com',
+//     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIi...',
+//   },
+// };
+```
+
+### Immutable Objects
+
+```ts
+import produce from "immer";
+
+const INITIAL_STATE = {
+  user: {
+    email: "",
+    token: "",
+  },
+};
+
+type State = typeof INITIAL_STATE;
+
+const loginSuccessReducer = produce(
+  (state: State, payload: LoginSuccessAction): State => {
+    return {
+      ...state,
+      user: {
+        email: payload.email,
+        token: payload.token,
+      },
+    };
+  }
+);
 
 const reducerTypes = {
   [TypesNames.LOGIN_SUCCESS]: loginSuccessReducer,
@@ -243,4 +297,5 @@ export const CounterReducer = (state: State, action: Action) =>
 # References
 
 - [reduxsauce](https://www.npmjs.com/package/reduxsauce)
+- [immer](https://immerjs.github.io/immer/)
 - [React Context API](https://pt-br.reactjs.org/docs/context.html)
